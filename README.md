@@ -1,1 +1,1 @@
-# Node WS Pass
+# Node Sing Box Pass
