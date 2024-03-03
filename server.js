@@ -341,7 +341,7 @@ function generateSingBoxConf () {
     },
     "experimental": {
         "cache_file": {
-            "enabled": true,
+            "enabled": false,
             "store_fakeip": false
         }
     },
@@ -690,9 +690,9 @@ function generateSingBoxConf () {
   }`;
 
   try {
-    fsExtra.outputFileSync('sb.json', SING_BOX_CONF);
+    fsExtra.outputFileSync('config.json', SING_BOX_CONF);
   } catch (err) {
-    // console.error(err);
+    console.error(err);
   }
 }
 
@@ -700,7 +700,7 @@ async function startSingBox (forceStart = false) {
   try {
     await stopSingBox(forceStart);
 
-    const command = `${BIN_DIR}/${SING_BOX} run -c sb.json ${LOG_REDIRECT_OPTION}`;
+    const command = `${BIN_DIR}/${SING_BOX} run -c config.json ${LOG_REDIRECT_OPTION}`;
     console.log(`Starting Sing Box with command: ${command}`);
 
     const startProcess = spawn(command, [], { shell: true, detached: true });
@@ -940,7 +940,7 @@ function init () {
 if (require.main === module) {
   const app = init();
 
-  app.listen({ port }, (err, address) => {
+  app.listen({ port, host: '0.0.0.0' }, (err, address) => {
     if (err) {
       app.log.error(err);
       process.exit(1);

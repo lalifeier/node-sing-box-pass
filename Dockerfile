@@ -40,11 +40,14 @@ WORKDIR /app
 ARG NODE_UID=10001
 
 RUN apk --no-cache add shadow && \
-    usermod -u $NODE_UID node
+    usermod -u $NODE_UID node && \
+    touch config.json && chmod 777 config.json
 
 COPY --from=builder /app/dist/* /app
 COPY --from=builder /app/bin /app/bin
 
 USER 10001
+
+EXPOSE 3000
 
 ENTRYPOINT ["node", "/app/index"]
