@@ -926,10 +926,10 @@ function init () {
         const wg_trojan = `trojan://${UUID}@${CFIP}:443?security=tls&sni=${HOST}&type=ws&host=${HOST}&path=%2F${WS_PATH}-wgtr#${CFIP}-WgTr`;
 
         data.push(`${vless}`);
-        data.push(`${vmess}`);
-        data.push(`${trojan}`);
+        // data.push(`${vmess}`);
+        // data.push(`${trojan}`);
 
-        data.push(`${wg_vmess}`);
+        // data.push(`${wg_vmess}`);
         data.push(`${wg_trojan}`);
       }
 
