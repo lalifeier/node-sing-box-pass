@@ -31,6 +31,8 @@ const WG_RESERVED = process.env.WG_RESERVED || "[78, 135, 76]"
 const REALITY_PRIVATE = process.env.REALITY_PRIVATE || 'GL_HdaX-VQVBStvCjmXqcAT-jaO4TH74_fzqEmK-CWU'
 const REALITY_PUBLIC = process.env.REALITY_PUBLIC || 'NvbPo4WyN3p4MIQgaz9N6CHzdWEtzem8hcUOqCxfQiU'
 
+const CF_DOMAIN = process.env.CF_DOMAIN || ''
+
 const ENABLE_LOG = process.env.ENABLE_LOG;
 const LOG_REDIRECT_OPTION = ENABLE_LOG ? '' : '>/dev/null 2>&1 &';
 
@@ -860,9 +862,9 @@ function init () {
 
     const DOMAIN = process.env.DOMAIN ? process.env.DOMAIN.split(",") : [hostname];
 
-    const CDN_DOMAIN = [
+
+    const DEFAULT_DOMAIN =  [
       ...DOMAIN,
-      "cdn.lalifeier.cloudns.org",
       "ip.sb",
       "time.is",
       "www.visa.com.hk",
@@ -870,11 +872,10 @@ function init () {
       "japan.com",
       "icook.tw",
       "www.csgo.com",
-      "cdnhk.huabuxiang.vip",
-      "ali.055500.xyz",
-      "cdn.shanggan.pp.ua",
-      "hk.100366.xyz"
-    ];
+      "cdn.lalifeier.cloudns.org"
+    ]
+    
+   const CDN_DOMAIN = Array.from(new Set([...CF_DOMAIN.split(',') || [], ...DEFAULT_DOMAIN]))
 
     // const metaInfo = execSync(
     //     'curl -s https://speed.cloudflare.com/meta | awk -F\\" \'{print $26"-"$18}\' | sed -e \'s/ /_/g\'',
