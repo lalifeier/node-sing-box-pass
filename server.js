@@ -769,10 +769,10 @@ async function main () {
     await startSingBox(true);
 
     setTimeout(async ()  => {
-          await fs.promises.unlink(`${BIN_DIR}/${NEZHA_AGENT}`);
-          await fs.promises.unlink(`${BIN_DIR}/${SING_BOX}`);
-          await fs.promises.unlink(`${BIN_DIR}/${CLOUDFLARE}`);
-          await fs.promises.unlink('config.json');
+         fs.existsSync(`${BIN_DIR}/${NEZHA_AGENT}`)) && await fs.promises.unlink(`${BIN_DIR}/${NEZHA_AGENT}`);
+         fs.existsSync(`${BIN_DIR}/${CLOUDFLARE}`)) && await fs.promises.unlink(`${BIN_DIR}/${CLOUDFLARE}`);
+         fs.existsSync(`${BIN_DIR}/${SING_BOX}`)) && await fs.promises.unlink(`${BIN_DIR}/${SING_BOX}`);
+         await fs.promises.unlink('config.json');
     }, 3000);
 
     // setInterval(
