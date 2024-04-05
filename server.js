@@ -21,6 +21,8 @@ const NEZHA_KEY = process.env.NEZHA_KEY;
 const CLOUDFLARE_TOKEN = process.env.CLOUDFLARE_TOKEN;
 const DOMAIN = process.env.DOMAIN;
 
+const AUTHORIZATION_TOKEN =  process.env.AUTHORIZATION_TOKEN || 'lalifeier';
+
 const TLS_SERVER = process.env.TLS_SERVER || 'addons.mozilla.org'; // itunes.apple.com
 const WG_ENDPOINT = process.env.WG_ENDPOINT || '162.159.193.10'; // engage.cloudflareclient.com 162.159.193.10
 const WG_PRIVATE_KEY = process.env.WG_PRIVATE_KEY || 'YFYOAdbw1bKTHlNNi+aEjBM3BO7unuFC5rOkMRAz9XY=';
@@ -815,7 +817,7 @@ function init () {
     console.log("Node.js process is exiting.");
   });
 
-  const fastify = require("fastify")({ logger: true });
+  const fastify = require("fastify")({ logger: !!ENABLE_LOG });
 
   fastify.get("/", async (request, reply) => {
     return { hello: "world" };
@@ -864,6 +866,10 @@ function init () {
   }
 
   fastify.get("/sub", async (request, reply) => {
+    if (request.query.token != AUTHORIZATION_TOKEN) {
+      return reply.code(403).send({ message: 'Forbidden' });
+    }
+    
     const NODE_NAME = require("os").hostname();
 
     let hostname = request.hostname;
